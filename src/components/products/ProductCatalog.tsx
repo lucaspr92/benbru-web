@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { MessageCircle, X, Sparkles, Coffee, Croissant, Wheat, Sandwich, ShoppingBag } from "lucide-react";
-import type { Product, Category, CategoryId } from "../../content/products";
+import { createPortal } from "react-dom";
+import { 
+  MessageCircle, 
+  X, 
+  Sparkles, 
+  Coffee, 
+  Croissant, 
+  Wheat, 
+  Sandwich, 
+  ShoppingBag 
+} from "lucide-react";
+import type { Product, Category } from "../../content/products";
 import { buildProductWhatsAppLink } from "../../content/site";
 
 interface ProductCatalogProps {
@@ -16,6 +26,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategoryFilter);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Sync category with URL search params
   useEffect(() => {
@@ -27,6 +42,25 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
       }
     }
   }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (activeProduct) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setActiveProduct(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "unset";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [activeProduct]);
 
   const handleCategoryChange = (catId: string) => {
     setSelectedCategory(catId);
@@ -65,19 +99,19 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
   return (
     <div className="w-full">
-      {/* Category Filter Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 pt-2 no-scrollbar justify-start md:justify-center">
+      {/* Category Filter Chips with mobile edge padding & touch scrolling */}
+      <div className="-mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto pb-4 pt-2 no-scrollbar justify-start md:justify-center">
         <button
           type="button"
           onClick={() => handleCategoryChange("todos")}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shrink-0 cursor-pointer ${
+          className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all shrink-0 cursor-pointer ${
             selectedCategory === "todos"
               ? "bg-[#3F2B1F] text-[#E9E3DD] shadow-md"
               : "bg-[#E7E1D9] text-[#5D4E44] hover:bg-[#DED7CE] hover:text-[#3F2B1F]"
           }`}
         >
-          <Sparkles className="w-4 h-4" />
-          <span>Todos los productos ({initialProducts.length})</span>
+          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span>Todos ({initialProducts.length})</span>
         </button>
 
         {initialCategories.map((category) => {
@@ -88,7 +122,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
               key={category.id}
               type="button"
               onClick={() => handleCategoryChange(category.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shrink-0 cursor-pointer ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all shrink-0 cursor-pointer ${
                 isSelected
                   ? "bg-[#3F2B1F] text-[#E9E3DD] shadow-md"
                   : "bg-[#E7E1D9] text-[#5D4E44] hover:bg-[#DED7CE] hover:text-[#3F2B1F]"
@@ -107,11 +141,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
       </p>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="group bg-[#F4EFEB] rounded-2xl overflow-hidden border border-[#87786F]/20 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+            className="group bg-[#F4EFEB] rounded-2xl overflow-hidden border border-[#87786F]/20 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
           >
             {/* Image */}
             <div 
@@ -127,14 +161,14 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               {product.featured && (
-                <span className="absolute top-3 left-3 bg-[#A66B38] text-white text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-sm">
+                <span className="absolute top-3 left-3 bg-[#A66B38] text-white text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-sm">
                   Destacado
                 </span>
               )}
             </div>
 
             {/* Content */}
-            <div className="p-5 flex-grow flex flex-col justify-between">
+            <div className="p-4 sm:p-5 flex-grow flex flex-col justify-between">
               <div>
                 {/* Tags */}
                 {product.tags && product.tags.length > 0 && (
@@ -152,22 +186,22 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
                 <h3 
                   onClick={() => setActiveProduct(product)}
-                  className="font-display text-xl font-bold text-[#3F2B1F] group-hover:text-[#A66B38] transition-colors cursor-pointer"
+                  className="font-display text-lg sm:text-xl font-bold text-[#3F2B1F] group-hover:text-[#A66B38] transition-colors cursor-pointer"
                 >
                   {product.name}
                 </h3>
 
-                <p className="text-sm text-[#5D4E44] mt-2 line-clamp-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#5D4E44] mt-2 line-clamp-3 leading-relaxed">
                   {product.shortDescription}
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-5 mt-4 border-t border-[#87786F]/15 flex items-center justify-between gap-3">
+              <div className="pt-4 mt-4 border-t border-[#87786F]/15 flex items-center justify-between gap-3">
                 <button
                   type="button"
                   onClick={() => setActiveProduct(product)}
-                  className="text-xs font-semibold text-[#5D4E44] hover:text-[#3F2B1F] underline underline-offset-4 cursor-pointer"
+                  className="text-xs font-semibold text-[#5D4E44] hover:text-[#3F2B1F] underline underline-offset-4 cursor-pointer py-1"
                 >
                   Ver detalle
                 </button>
@@ -176,7 +210,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                   href={buildProductWhatsAppLink(product.name)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-semibold rounded-full shadow-sm hover:scale-102 active:scale-98 transition-all"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold rounded-full shadow-sm active:scale-95 transition-all"
                   aria-label={`Consultar disponibilidad de ${product.name} por WhatsApp`}
                 >
                   <MessageCircle className="w-3.5 h-3.5 fill-current stroke-none" />
@@ -188,69 +222,74 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
         ))}
       </div>
 
-      {/* Product Detail Modal */}
-      {activeProduct && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          role="dialog"
-          aria-modal="true"
-          onClick={() => setActiveProduct(null)}
-        >
+      {/* Product Detail Modal rendered via React Portal */}
+      {mounted &&
+        activeProduct &&
+        createPortal(
           <div
-            className="bg-[#E9E3DD] rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-[#87786F]/30 relative animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-150"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Detalle de ${activeProduct.name}`}
+            onClick={() => setActiveProduct(null)}
           >
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setActiveProduct(null)}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#3F2B1F]/80 text-[#E9E3DD] hover:bg-[#3F2B1F] flex items-center justify-center transition-colors cursor-pointer"
-              aria-label="Cerrar modal"
+            <div
+              className="bg-[#E9E3DD] rounded-3xl max-w-lg w-full max-h-[88dvh] flex flex-col overflow-hidden shadow-2xl border border-[#87786F]/30 relative"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-5 h-5" />
-            </button>
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setActiveProduct(null)}
+                className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-[#3F2B1F]/80 text-[#E9E3DD] hover:bg-[#3F2B1F] flex items-center justify-center transition-colors cursor-pointer focus:outline-none"
+                aria-label="Cerrar ventana de detalle"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
-            {/* Modal Image */}
-            <div className="aspect-4/3 w-full bg-[#E7E1D9] relative overflow-hidden">
-              <img
-                src={activeProduct.image}
-                alt={activeProduct.alt}
-                width={800}
-                height={600}
-                className="w-full h-full object-cover"
-              />
-              {activeProduct.featured && (
-                <span className="absolute bottom-3 left-3 bg-[#A66B38] text-white text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
-                  Especialidad de la casa
-                </span>
-              )}
-            </div>
+              {/* Modal Image */}
+              <div className="h-48 sm:h-64 w-full bg-[#E7E1D9] relative shrink-0 overflow-hidden">
+                <img
+                  src={activeProduct.image}
+                  alt={activeProduct.alt}
+                  width={800}
+                  height={600}
+                  className="w-full h-full object-cover"
+                />
+                {activeProduct.featured && (
+                  <span className="absolute bottom-3 left-3 bg-[#A66B38] text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                    Especialidad de la casa
+                  </span>
+                )}
+              </div>
 
-            {/* Modal Body */}
-            <div className="p-6">
-              {activeProduct.tags && (
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {activeProduct.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-medium px-2.5 py-1 rounded-full bg-[#E7E1D9] text-[#5D4E44] border border-[#87786F]/30"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              {/* Scrollable Modal Body */}
+              <div className="p-5 sm:p-6 overflow-y-auto flex-1">
+                {activeProduct.tags && (
+                  <div className="flex flex-wrap gap-1.5 mb-2.5">
+                    {activeProduct.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] sm:text-xs font-medium px-2.5 py-0.5 rounded-full bg-[#E7E1D9] text-[#5D4E44] border border-[#87786F]/30"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-              <h3 className="font-display text-2xl font-bold text-[#3F2B1F]">
-                {activeProduct.name}
-              </h3>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-[#3F2B1F]">
+                  {activeProduct.name}
+                </h3>
 
-              <p className="text-sm text-[#5D4E44] mt-3 leading-relaxed">
-                {activeProduct.longDescription}
-              </p>
+                <p className="text-xs sm:text-sm text-[#5D4E44] mt-2.5 leading-relaxed">
+                  {activeProduct.longDescription}
+                </p>
+              </div>
 
-              <div className="mt-6 pt-5 border-t border-[#87786F]/20 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <span className="text-xs text-[#87786F]">
+              {/* Modal Footer / Action Button */}
+              <div className="p-4 sm:p-5 border-t border-[#87786F]/20 bg-[#E7E1D9]/70 shrink-0 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <span className="text-[11px] text-[#87786F] text-center sm:text-left">
                   Atención en local o delivery en La Costa
                 </span>
 
@@ -258,16 +297,16 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                   href={buildProductWhatsAppLink(activeProduct.name)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#25D366] hover:bg-[#20ba5a] text-white text-sm font-semibold rounded-full shadow-md transition-all active:scale-95"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#25D366] hover:bg-[#20ba5a] text-white text-sm font-bold rounded-full shadow-md transition-all active:scale-95"
                 >
                   <MessageCircle className="w-4 h-4 fill-current stroke-none" />
                   <span>Consultar por WhatsApp</span>
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 };
