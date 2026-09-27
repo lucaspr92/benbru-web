@@ -1,0 +1,440 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, buildWhatsAppLink, buildProductWhatsAppLink } from '../content/site';
+import { categories, products } from '../content/products';
+import { deliveryZones, orderSteps } from '../content/delivery';
+import { MessageCircle, MapPin, Clock, ArrowRight, Sparkles, Wheat, Coffee, Croissant, ShieldCheck } from 'lucide-react';
+import { InstagramIcon } from '../components/ui/InstagramIcon';
+
+const featuredProducts = products.filter(p => p.featured).slice(0, 6);
+---
+
+<BaseLayout title="BenBru — Panadería Artesanal & Cafetería en Costa del Este">
+  
+  <!-- HERO SECTION -->
+  <section class="relative bg-[#3F2B1F] text-[#E9E3DD] overflow-hidden py-20 lg:py-28 border-b border-[#5D4E44]">
+    <div class="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none">
+      <img 
+        src="/images/hero/hero-bakery.webp" 
+        alt="Fondo BenBru" 
+        class="w-full h-full object-cover" 
+        width="1920" 
+        height="1080"
+        fetchpriority="high"
+      />
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E9E3DD]/10 border border-[#87786F]/40 text-[#E7E1D9] text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-sm">
+        <Sparkles className="w-3.5 h-3.5 text-[#A66B38]" />
+        <span>Costa del Este • Obrador Artesanal &amp; Cafetería</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#E9E3DD] max-w-4xl leading-[1.1] text-balance">
+        Pan de verdad, café de especialidad y amor por el buen oficio.
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="mt-6 text-lg sm:text-xl text-[#E7E1D9]/90 max-w-2xl leading-relaxed">
+        Elaboramos panadería con fermentación lenta de masa madre, hojaldres con pura manteca y café seleccionado en el bosque de Costa del Este.
+      </p>
+
+      <!-- CTAs -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+        <a
+          href="/productos"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E9E3DD] text-[#3F2B1F] hover:bg-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-102 active:scale-98 transition-all"
+        >
+          <span>Ver catálogo de productos</span>
+          <ArrowRight className="w-4 h-4" />
+        </a>
+
+        <a
+          href={buildWhatsAppLink("¡Hola BenBru! Quería hacer un pedido.")}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20ba5a] text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-102 active:scale-98 transition-all"
+        >
+          <MessageCircle className="w-5 h-5 fill-current stroke-none" />
+          <span>Escribinos al WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Mini Feature Badges -->
+      <div class="mt-14 pt-10 border-t border-[#87786F]/20 grid grid-cols-2 md:grid-cols-4 gap-6 text-left max-w-4xl w-full">
+        <div class="flex items-center gap-3">
+          <Wheat className="w-6 h-6 text-[#A66B38] shrink-0" />
+          <span class="text-xs sm:text-sm font-medium text-[#E7E1D9]">100% Masa Madre viva</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <Croissant className="w-6 h-6 text-[#A66B38] shrink-0" />
+          <span class="text-xs sm:text-sm font-medium text-[#E7E1D9]">Hojaldres con pura manteca</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <Coffee className="w-6 h-6 text-[#A66B38] shrink-0" />
+          <span class="text-xs sm:text-sm font-medium text-[#E7E1D9]">Cafetería de Especialidad</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <MapPin className="w-6 h-6 text-[#A66B38] shrink-0" />
+          <span class="text-xs sm:text-sm font-medium text-[#E7E1D9]">Envíos en todo La Costa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES BAR / DIFERENCIALES -->
+  <section class="py-16 bg-[#E7E1D9] border-b border-[#87786F]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {site.values.map((val) => (
+          <div class="bg-[#F4EFEB] p-6 rounded-2xl border border-[#87786F]/20 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-full bg-[#E9E3DD] flex items-center justify-center text-[#A66B38] mb-4 shadow-xs">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h2 class="font-display text-lg font-bold text-[#3F2B1F] mb-2">
+                {val.title}
+              </h2>
+              <p class="text-xs sm:text-sm text-[#5D4E44] leading-relaxed">
+                {val.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES GRID -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+          Especialidades del Obrador
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F] mt-2">
+          Nuestras líneas de elaboración
+        </h2>
+        <p class="text-sm text-[#5D4E44] mt-3">
+          Cada receta respeta sus tiempos de fermentación, materias primas puras y métodos tradicionales.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.map((cat) => (
+          <a
+            href={`/productos?cat=${cat.id}`}
+            class="group bg-[#F4EFEB] rounded-2xl p-6 border border-[#87786F]/25 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <span class="inline-block p-3 rounded-xl bg-[#E9E3DD] text-[#3F2B1F] group-hover:bg-[#3F2B1F] group-hover:text-[#E9E3DD] transition-colors mb-4">
+                {cat.id === "panaderia" && <Wheat className="w-6 h-6" />}
+                {cat.id === "pasteleria" && <Croissant className="w-6 h-6" />}
+                {cat.id === "salados" && <Sparkles className="w-6 h-6" />}
+                {cat.id === "cafeteria" && <Coffee className="w-6 h-6" />}
+              </span>
+              <h3 class="font-display text-xl font-bold text-[#3F2B1F] group-hover:text-[#A66B38] transition-colors">
+                {cat.name}
+              </h3>
+              <p class="text-xs text-[#5D4E44] mt-2 leading-relaxed">
+                {cat.description}
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-[#87786F]/15 flex items-center text-xs font-bold text-[#3F2B1F] group-hover:text-[#A66B38]">
+              <span>Explorar</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="py-20 bg-[#E7E1D9] border-y border-[#87786F]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+            Favoritos de la Casa
+          </span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F] mt-2">
+            Productos destacados
+          </h2>
+        </div>
+        <a
+          href="/productos"
+          class="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-bold text-[#3F2B1F] hover:text-[#A66B38] transition-colors"
+        >
+          <span>Ver todo el catálogo</span>
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredProducts.map((product) => (
+          <div class="group bg-[#F4EFEB] rounded-2xl overflow-hidden border border-[#87786F]/20 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-4/3 overflow-hidden bg-[#E7E1D9]">
+              <img
+                src={product.image}
+                alt={product.alt}
+                loading="lazy"
+                width="800"
+                height="600"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-3 left-3 bg-[#A66B38] text-white text-[11px] font-semibold uppercase px-2.5 py-1 rounded-full shadow-sm">
+                Destacado
+              </span>
+            </div>
+
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <h3 class="font-display text-xl font-bold text-[#3F2B1F] group-hover:text-[#A66B38] transition-colors">
+                  {product.name}
+                </h3>
+                <p class="text-sm text-[#5D4E44] mt-2 line-clamp-2 leading-relaxed">
+                  {product.shortDescription}
+                </p>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-[#87786F]/15 flex items-center justify-between">
+                <a
+                  href="/productos"
+                  class="text-xs font-semibold text-[#5D4E44] hover:text-[#3F2B1F] underline underline-offset-4"
+                >
+                  Más información
+                </a>
+                <a
+                  href={buildProductWhatsAppLink(product.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-semibold rounded-full shadow-sm hover:scale-102 active:scale-98 transition-all"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 fill-current stroke-none" />
+                  <span>Pedir</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCAL EN COSTA DEL ESTE SECTION -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[#F4EFEB] rounded-3xl p-8 sm:p-12 border border-[#87786F]/25 shadow-md">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          
+          <!-- Info Column -->
+          <div class="space-y-6">
+            <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+              Punto de Encuentro
+            </span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F]">
+              Vení a disfrutar de nuestro local en Costa del Este
+            </h2>
+            <p class="text-[#5D4E44] leading-relaxed">
+              Te esperamos todos los días para desayunar, merendar o llevarte pan recién horneado a casa. Disfrutá de nuestras mesas en un entorno rodeado de bosque y aire marítimo.
+            </p>
+
+            <div class="space-y-4 pt-2">
+              <div class="flex items-start gap-3">
+                <div class="p-2.5 rounded-full bg-[#E9E3DD] text-[#A66B38] shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 class="font-bold text-[#3F2B1F]">{site.location.street}</h3>
+                  <p class="text-sm text-[#5D4E44]">{site.location.city}, Partido de La Costa</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="p-2.5 rounded-full bg-[#E9E3DD] text-[#A66B38] shrink-0">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 class="font-bold text-[#3F2B1F]">Horario habitual</h3>
+                  <p class="text-sm text-[#5D4E44]">{site.location.hoursText}</p>
+                  <p class="text-xs text-[#87786F] mt-0.5">{site.location.seasonNote}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 flex flex-wrap gap-4">
+              <a
+                href={site.location.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-[#3F2B1F] text-[#E9E3DD] hover:bg-[#5D4E44] rounded-full text-sm font-semibold shadow-sm transition-all"
+              >
+                <MapPin className="w-4 h-4 text-[#A66B38]" />
+                <span>Cómo llegar (Google Maps)</span>
+              </a>
+
+              <a
+                href={buildWhatsAppLink("¡Hola! Quería consultar los horarios y productos disponibles hoy en el local.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white hover:bg-[#20ba5a] rounded-full text-sm font-semibold shadow-sm transition-all"
+              >
+                <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+                <span>Consultar por WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Map Embed Column -->
+          <div class="w-full h-80 sm:h-96 rounded-2xl overflow-hidden shadow-inner border border-[#87786F]/30 bg-[#E7E1D9]">
+            <iframe
+              src={site.location.embedMapUrl}
+              width="100%"
+              height="100%"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Mapa de ubicación BenBru Costa del Este"
+              class="w-full h-full grayscale-[20%] contrast-[1.05]"
+            ></iframe>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY ZONES SECTION -->
+  <section class="py-20 bg-[#E7E1D9] border-t border-[#87786F]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+          Envíos a Domicilio
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F] mt-2">
+          Llegamos a todo el Partido de La Costa
+        </h2>
+        <p class="text-sm text-[#5D4E44] mt-3">
+          ¿Estás de vacaciones o vivís en la zona? Te llevamos pan recién salido del obrador, pastelería y boxes de desayuno directo a tu puerta.
+        </p>
+      </div>
+
+      <!-- Zones Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        {deliveryZones.map((zone) => (
+          <div class="bg-[#F4EFEB] p-5 rounded-2xl border border-[#87786F]/20 text-center shadow-xs">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#E9E3DD] text-[#A66B38] mb-2 border border-[#87786F]/20">
+              {zone.badge}
+            </span>
+            <h3 class="font-display font-bold text-[#3F2B1F] text-base sm:text-lg">
+              {zone.name}
+            </h3>
+            <p class="text-xs text-[#5D4E44] mt-1">
+              {zone.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- How to order steps -->
+      <div class="bg-[#E9E3DD] rounded-2xl p-8 border border-[#87786F]/20">
+        <h3 class="font-display text-2xl font-bold text-[#3F2B1F] text-center mb-8">
+          ¿Cómo coordinar tu pedido en 3 pasos?
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {orderSteps.map((step) => (
+            <div class="flex flex-col items-center text-center">
+              <span class="font-display text-3xl font-extrabold text-[#A66B38] mb-2">
+                {step.step}
+              </span>
+              <h4 class="font-bold text-[#3F2B1F] text-base mb-1">
+                {step.title}
+              </h4>
+              <p class="text-xs sm:text-sm text-[#5D4E44] leading-relaxed">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM STRIP -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="max-w-xl mx-auto mb-10">
+        <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+          Comunidad &amp; Novedades
+        </span>
+        <h2 class="font-display text-3xl font-bold text-[#3F2B1F] mt-2">
+          Seguinos en Instagram
+        </h2>
+        <p class="text-sm text-[#5D4E44] mt-2">
+          Compartimos historias diarias de horneado, tandas del día y lanzamientos de temporada.
+        </p>
+        <a
+          href={site.contact.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-[#3F2B1F] text-[#E9E3DD] rounded-full text-sm font-semibold hover:bg-[#5D4E44] transition-all shadow-sm"
+        >
+          <InstagramIcon className="w-4 h-4 text-[#A66B38]" />
+          <span>{site.contact.instagramHandle}</span>
+        </a>
+      </div>
+
+      <!-- Static Grid of Daily Bakery Life -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {products.slice(0, 6).map((item) => (
+          <a
+            href={site.contact.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group relative aspect-square rounded-xl overflow-hidden bg-[#E7E1D9] border border-[#87786F]/20 block shadow-xs"
+          >
+            <img
+              src={item.image}
+              alt={item.name}
+              loading="lazy"
+              width="400"
+              height="400"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+            />
+            <div class="absolute inset-0 bg-[#3F2B1F]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-3 text-center">
+              <InstagramIcon className="w-6 h-6 text-white" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-16 bg-[#3F2B1F] text-[#E9E3DD] border-t border-[#5D4E44]">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="font-display text-3xl sm:text-4xl font-bold">
+        ¿Querés encargar algo especial o consultar por hoy?
+      </h2>
+      <p class="mt-4 text-sm sm:text-base text-[#E7E1D9]/80 max-w-xl mx-auto">
+        Escribinos directamente al WhatsApp. Te atendemos al instante para coordinar tu retiro en Costa del Este o envío a domicilio.
+      </p>
+      <div class="mt-8 flex justify-center">
+        <a
+          href={buildWhatsAppLink("¡Hola BenBru! Quería hacerles una consulta sobre encargos 😊")}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20ba5a] text-white text-base font-bold rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all"
+        >
+          <MessageCircle className="w-5 h-5 fill-current stroke-none" />
+          <span>Iniciar conversación en WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

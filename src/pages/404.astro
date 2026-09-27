@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ArrowLeft, MessageCircle } from 'lucide-react';
+import { buildWhatsAppLink } from '../content/site';
+---
+
+<BaseLayout title="Página no encontrada — BenBru Panadería & Cafetería">
+  <section class="py-28 bg-[#E9E3DD] text-center">
+    <div class="max-w-md mx-auto px-4">
+      <span class="text-6xl mb-4 block">🥐</span>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-[#3F2B1F]">
+        Página no encontrada
+      </h1>
+      <p class="mt-4 text-[#5D4E44] text-base leading-relaxed">
+        Parece que esta migaja se perdió. Te invitamos a volver al inicio o recorrer nuestras especialidades del obrador.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="/"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#3F2B1F] text-[#E9E3DD] rounded-full text-sm font-bold shadow-md hover:bg-[#5D4E44] transition-all"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Volver al inicio</span>
+        </a>
+
+        <a
+          href={buildWhatsAppLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] text-white rounded-full text-sm font-bold shadow-md hover:bg-[#20ba5a] transition-all"
+        >
+          <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+          <span>Escribinos al WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

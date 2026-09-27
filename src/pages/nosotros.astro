@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { about } from '../content/about';
+import { site, buildWhatsAppLink } from '../content/site';
+import { Sparkles, MapPin, MessageCircle, Heart, ArrowRight } from 'lucide-react';
+---
+
+<BaseLayout 
+  title="Nuestra Historia & Oficio — BenBru Panadería & Cafetería"
+  description="Conocé la historia de BenBru en Costa del Este, nuestro amor por la fermentación lenta, las masas madre y el café de especialidad."
+>
+  
+  <!-- Hero Section -->
+  <section class="bg-[#3F2B1F] text-[#E9E3DD] py-20 lg:py-24 border-b border-[#5D4E44]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E9E3DD]/10 border border-[#87786F]/40 text-[#E7E1D9] text-xs font-semibold tracking-wider uppercase mb-6">
+        <Sparkles className="w-3.5 h-3.5 text-[#A66B38]" />
+        <span>Nuestra Historia &amp; Pasión</span>
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#E9E3DD] leading-tight">
+        {about.headline}
+      </h1>
+
+      <p class="mt-6 text-lg sm:text-xl text-[#E7E1D9]/90 leading-relaxed font-light">
+        {about.lead}
+      </p>
+    </div>
+  </section>
+
+  <!-- Story Blocks -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-24">
+      {about.storyBlocks.map((block, index) => {
+        const isReversed = index % 2 === 1;
+        return (
+          <div class={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
+            
+            {/* Visual Card */}
+            <div class={`lg:col-span-5 ${isReversed ? 'lg:order-2' : ''}`}>
+              <div class="bg-[#F4EFEB] rounded-3xl p-8 border border-[#87786F]/25 shadow-sm relative overflow-hidden">
+                <div class="w-12 h-12 rounded-2xl bg-[#E9E3DD] flex items-center justify-center text-[#A66B38] font-display text-xl font-bold mb-6">
+                  0{index + 1}
+                </div>
+                <h3 class="font-display text-2xl font-bold text-[#3F2B1F]">
+                  {block.title}
+                </h3>
+                <div class="mt-6 pt-6 border-t border-[#87786F]/20 text-[#A66B38] font-semibold text-sm flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 shrink-0" />
+                  <span>{block.highlight}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Card -->
+            <div class={`lg:col-span-7 ${isReversed ? 'lg:order-1' : ''}`}>
+              <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+                {block.subtitle}
+              </span>
+              <p class="mt-3 text-base sm:text-lg text-[#5D4E44] leading-relaxed">
+                {block.content}
+              </p>
+            </div>
+
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Pillars Section -->
+  <section class="py-20 bg-[#E7E1D9] border-y border-[#87786F]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+          Nuestros Compromisos
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F] mt-2">
+          Los 4 pilares de BenBru
+        </h2>
+        <p class="text-sm text-[#5D4E44] mt-2">
+          Principios innegociables con los que elaboramos cada día para nuestros clientes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {about.pillars.map((pillar) => (
+          <div class="bg-[#F4EFEB] p-6 rounded-2xl border border-[#87786F]/20 shadow-xs">
+            <span class="font-display text-2xl font-bold text-[#A66B38]">
+              {pillar.number}
+            </span>
+            <h3 class="font-display text-lg font-bold text-[#3F2B1F] mt-3 mb-1">
+              {pillar.name}
+            </h3>
+            <p class="text-xs sm:text-sm text-[#5D4E44] leading-relaxed">
+              {pillar.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit Invitation -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="bg-[#3F2B1F] text-[#E9E3DD] rounded-3xl p-10 sm:p-14 shadow-xl">
+        <Heart className="w-10 h-10 text-[#A66B38] mx-auto mb-4" />
+        <h2 class="font-display text-3xl sm:text-4xl font-bold">
+          Vení a conocernos en Costa del Este
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-[#E7E1D9]/90 max-w-xl mx-auto leading-relaxed">
+          Estamos en <strong>{site.location.fullAddress}</strong>. Nos encanta recibir a los vecinos y a quienes visitan la costa con ganas de compartir algo rico.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href={site.location.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#E9E3DD] text-[#3F2B1F] hover:bg-white rounded-full text-sm font-bold shadow-md transition-all"
+          >
+            <MapPin className="w-4 h-4 text-[#A66B38]" />
+            <span>Ver mapa de ubicación</span>
+          </a>
+
+          <a
+            href={buildWhatsAppLink("¡Hola BenBru! Quería saludarlos y consultar por los productos de hoy.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] text-white hover:bg-[#20ba5a] rounded-full text-sm font-bold shadow-md transition-all"
+          >
+            <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+            <span>Escribinos por WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

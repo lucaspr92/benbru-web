@@ -1,0 +1,110 @@
+---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { WhatsAppFab } from '../components/layout/WhatsAppFab';
+import { site } from '../content/site';
+import '../styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = `${site.name} — ${site.subname} en Costa del Este`,
+  description = site.description,
+  ogImage = "/images/logo.jpeg"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, site.url);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": `${site.name} - ${site.subname}`,
+  "image": `${site.url}${ogImage}`,
+  "description": description,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": site.location.street,
+    "addressLocality": site.location.city,
+    "addressRegion": "Provincia de Buenos Aires",
+    "postalCode": "B7108",
+    "addressCountry": "AR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -36.6095,
+    "longitude": -56.6896
+  },
+  "url": site.url,
+  "telephone": site.contact.whatsappDisplay,
+  "servesCuisine": ["Panadería Artesanal", "Pastelería", "Cafetería de Especialidad"],
+  "priceRange": "$$",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "08:00",
+      "closes": "20:30"
+    }
+  ],
+  "sameAs": [
+    site.contact.instagramUrl
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpeg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="es_AR" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" 
+      rel="stylesheet" 
+    />
+
+    <!-- JSON-LD LocalBusiness / Bakery -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="bg-[#E9E3DD] text-[#3F2B1F] antialiased selection:bg-[#A66B38] selection:text-white">
+    <Header currentPath={Astro.url.pathname} />
+    
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <Footer />
+    
+    <WhatsAppFab client:idle />
+  </body>
+</html>

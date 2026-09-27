@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ProductCatalog } from '../components/products/ProductCatalog';
+import { categories, products } from '../content/products';
+import { buildWhatsAppLink } from '../content/site';
+import { MessageCircle, Sparkles } from 'lucide-react';
+---
+
+<BaseLayout 
+  title="Catálogo de Productos — BenBru Panadería & Cafetería"
+  description="Conocé nuestra variedad de panes de masa madre, hojaldres con pura manteca, pastelería y cafetería de especialidad en Costa del Este."
+>
+  
+  <!-- Header Page Banner -->
+  <section class="bg-[#3F2B1F] text-[#E9E3DD] py-16 sm:py-20 border-b border-[#5D4E44]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E9E3DD]/10 border border-[#87786F]/40 text-[#E7E1D9] text-xs font-semibold tracking-wider uppercase mb-4">
+        <Sparkles className="w-3.5 h-3.5 text-[#A66B38]" />
+        <span>Elaboración Artesanal &amp; Diaria</span>
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight text-[#E9E3DD]">
+        Catálogo del Obrador
+      </h1>
+      
+      <p class="mt-4 text-base sm:text-lg text-[#E7E1D9]/80 max-w-2xl mx-auto leading-relaxed">
+        Descubrí nuestras creaciones. Podés consultar disponibilidad y encargar cualquier producto directamente a través de WhatsApp.
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive Products Catalog -->
+  <section class="py-16 sm:py-20 bg-[#E9E3DD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ProductCatalog 
+        client:load 
+        initialCategories={categories} 
+        initialProducts={products} 
+      />
+    </div>
+  </section>
+
+  <!-- Ordering Info Banner -->
+  <section class="py-14 bg-[#E7E1D9] border-t border-[#87786F]/20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-2xl sm:text-3xl font-bold text-[#3F2B1F]">
+        ¿Buscás algo que no encontrás en el catálogo?
+      </h2>
+      <p class="mt-3 text-sm text-[#5D4E44] max-w-xl mx-auto leading-relaxed">
+        Hacemos panes especiales, tortas a medida para cumpleaños y catering para eventos familiares o corporativos.
+      </p>
+      <div class="mt-6">
+        <a
+          href={buildWhatsAppLink("¡Hola BenBru! Quería consultar por un producto personalizado / encargo especial.")}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white text-sm font-bold rounded-full shadow-md hover:scale-105 active:scale-95 transition-all"
+        >
+          <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+          <span>Consultar pedido especial por WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

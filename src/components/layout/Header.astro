@@ -1,0 +1,90 @@
+---
+import { site, buildWhatsAppLink } from '../../content/site';
+import { MobileNav } from './MobileNav';
+import { MessageCircle } from 'lucide-react';
+import { InstagramIcon } from '../ui/InstagramIcon';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+const navLinks = [
+  { href: "/", label: "Inicio" },
+  { href: "/nosotros", label: "Nosotros" },
+  { href: "/productos", label: "Productos" },
+  { href: "/encargos", label: "Encargos & Envíos" },
+  { href: "/contacto", label: "Contacto & Ubicación" },
+];
+---
+
+<header class="sticky top-0 z-40 bg-[#E9E3DD]/90 backdrop-blur-md border-b border-[#87786F]/20 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    
+    <!-- Brand / Logo -->
+    <a href="/" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#A66B38] rounded-xl p-1">
+      <img 
+        src="/images/logo.jpeg" 
+        alt="Logo BenBru Panadería & Cafetería" 
+        class="w-12 h-12 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform"
+        width="48"
+        height="48"
+      />
+      <div class="flex flex-col">
+        <span class="font-display text-xl font-bold tracking-tight text-[#3F2B1F] group-hover:text-[#A66B38] transition-colors leading-none">
+          BENBRU
+        </span>
+        <span class="text-[10px] uppercase tracking-widest text-[#5D4E44] font-medium mt-0.5">
+          Panadería & Cafetería
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+      {navLinks.map((link) => {
+        const isActive = link.href === "/" ? currentPath === "/" : currentPath.startsWith(link.href);
+        return (
+          <a
+            href={link.href}
+            class={`px-3.5 py-2 rounded-full text-sm font-medium transition-all ${
+              isActive 
+                ? "bg-[#3F2B1F] text-[#E9E3DD] shadow-sm font-semibold" 
+                : "text-[#5D4E44] hover:text-[#3F2B1F] hover:bg-[#E7E1D9]"
+            }`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Desktop Actions -->
+    <div class="hidden md:flex items-center gap-3">
+      <a
+        href={site.contact.instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram oficial de BenBru"
+        class="p-2.5 rounded-full text-[#5D4E44] hover:text-[#3F2B1F] hover:bg-[#E7E1D9] transition-colors focus:outline-none focus:ring-2 focus:ring-[#A66B38]"
+      >
+        <InstagramIcon className="w-5 h-5" />
+      </a>
+
+      <a
+        href={buildWhatsAppLink()}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-[#3F2B1F] text-[#E9E3DD] rounded-full text-sm font-semibold hover:bg-[#5D4E44] active:scale-95 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[#A66B38]"
+      >
+        <MessageCircle className="w-4 h-4 text-[#25D366]" />
+        <span>WhatsApp</span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <MobileNav client:load currentPath={currentPath} />
+
+  </div>
+</header>

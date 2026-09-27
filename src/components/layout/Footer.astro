@@ -1,0 +1,142 @@
+---
+import { site, buildWhatsAppLink } from '../../content/site';
+import { MessageCircle, MapPin, Clock, Heart } from 'lucide-react';
+import { InstagramIcon } from '../ui/InstagramIcon';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-[#3F2B1F] text-[#E9E3DD] pt-16 pb-10 border-t border-[#5D4E44]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#5D4E44]">
+      
+      <!-- Brand Column -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <img 
+            src="/images/logo.jpeg" 
+            alt="Logo BenBru" 
+            class="w-12 h-12 rounded-full object-cover border-2 border-[#87786F]"
+            width="48"
+            height="48"
+          />
+          <div>
+            <span class="font-display text-2xl font-bold tracking-tight text-[#E9E3DD]">
+              BENBRU
+            </span>
+            <p class="text-xs uppercase tracking-widest text-[#E7E1D9]/70 font-medium">
+              Panadería & Cafetería
+            </p>
+          </div>
+        </div>
+        <p class="text-sm text-[#E7E1D9]/80 leading-relaxed">
+          Obrador artesanal de pan de masa madre, hojaldres con pura manteca y café de especialidad en el bosque de Costa del Este.
+        </p>
+        <div class="flex items-center gap-3 pt-2">
+          <a
+            href={site.contact.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de BenBru"
+            class="w-9 h-9 rounded-full bg-[#5D4E44] flex items-center justify-center text-[#E9E3DD] hover:bg-[#A66B38] transition-colors"
+          >
+            <InstagramIcon className="w-4 h-4" />
+          </a>
+          <a
+            href={buildWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp de BenBru"
+            class="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center text-white hover:opacity-90 transition-opacity"
+          >
+            <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Location Column -->
+      <div class="space-y-4">
+        <h4 class="font-display text-lg font-semibold text-[#E9E3DD] tracking-wide">
+          Nuestro Local
+        </h4>
+        <ul class="space-y-3 text-sm text-[#E7E1D9]/80">
+          <li class="flex items-start gap-2.5">
+            <MapPin className="w-4 h-4 text-[#A66B38] shrink-0 mt-0.5" />
+            <div>
+              <p class="font-medium text-[#E9E3DD]">{site.location.street}</p>
+              <p class="text-xs text-[#E7E1D9]/70">{site.location.city}, Partido de La Costa</p>
+              <a 
+                href={site.location.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block text-xs text-[#A66B38] hover:underline mt-1 font-semibold"
+              >
+                Abrir en Google Maps &rarr;
+              </a>
+            </div>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Clock className="w-4 h-4 text-[#A66B38] shrink-0 mt-0.5" />
+            <div>
+              <p class="font-medium text-[#E9E3DD]">Horario de atención</p>
+              <p class="text-xs text-[#E7E1D9]/70">{site.location.hoursText}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Delivery Zones Column -->
+      <div class="space-y-4">
+        <h4 class="font-display text-lg font-semibold text-[#E9E3DD] tracking-wide">
+          Zonas de Delivery
+        </h4>
+        <p class="text-xs text-[#E7E1D9]/70 leading-relaxed">
+          Llegamos a las principales localidades del Partido de La Costa con pedidos programados:
+        </p>
+        <div class="flex flex-wrap gap-1.5 text-xs">
+          {["Costa del Este", "Santa Teresita", "Mar del Tuyú", "Aguas Verdes", "La Lucila", "San Bernardo", "Costa Azul", "Mar de Ajó"].map((zone) => (
+            <span class="px-2.5 py-1 rounded-md bg-[#5D4E44]/70 text-[#E7E1D9] border border-[#87786F]/30">
+              {zone}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Quick Links & Contact -->
+      <div class="space-y-4">
+        <h4 class="font-display text-lg font-semibold text-[#E9E3DD] tracking-wide">
+          Navegación
+        </h4>
+        <ul class="space-y-2 text-sm text-[#E7E1D9]/80">
+          <li><a href="/" class="hover:text-[#A66B38] transition-colors">Inicio</a></li>
+          <li><a href="/nosotros" class="hover:text-[#A66B38] transition-colors">Nuestra Historia & Oficio</a></li>
+          <li><a href="/productos" class="hover:text-[#A66B38] transition-colors">Catálogo de Productos</a></li>
+          <li><a href="/encargos" class="hover:text-[#A66B38] transition-colors">Encargos Especiales & Envíos</a></li>
+          <li><a href="/contacto" class="hover:text-[#A66B38] transition-colors">Contacto & Ubicación</a></li>
+        </ul>
+        <div class="pt-2">
+          <a
+            href={buildWhatsAppLink("¡Hola! Me gustaría hacer un pedido para retirar o delivery.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-2 bg-[#25D366] text-white rounded-lg hover:opacity-90 transition-opacity"
+          >
+            <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+            <span>Hacer un pedido</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#E7E1D9]/60">
+      <p>
+        &copy; {currentYear} BenBru Panadería & Cafetería. Todos los derechos reservados.
+      </p>
+      <p class="flex items-center gap-1">
+        Hecho con <Heart className="w-3.5 h-3.5 text-[#A66B38] fill-current" /> en Costa del Este, Argentina.
+      </p>
+    </div>
+  </div>
+</footer>

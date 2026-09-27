@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { orderTypes, orderSteps, deliveryZones } from '../content/delivery';
+import { site, buildOrderWhatsAppLink, buildWhatsAppLink } from '../content/site';
+import { MessageCircle, Clock, Truck, Store, CreditCard, Sparkles, CheckCircle2 } from 'lucide-react';
+---
+
+<BaseLayout 
+  title="Encargos & Envíos — BenBru Panadería & Cafetería"
+  description="Encargá tortas de cumpleaños, boxes de desayuno o catering para eventos en Costa del Este y Partido de La Costa. Retiro por local o delivery."
+>
+
+  <!-- Hero Section -->
+  <section class="bg-[#3F2B1F] text-[#E9E3DD] py-16 sm:py-20 border-b border-[#5D4E44]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E9E3DD]/10 border border-[#87786F]/40 text-[#E7E1D9] text-xs font-semibold tracking-wider uppercase mb-4">
+        <Sparkles className="w-3.5 h-3.5 text-[#A66B38]" />
+        <span>Celebraciones &amp; Envíos en La Costa</span>
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight text-[#E9E3DD]">
+        Encargos Especiales &amp; Envíos
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-[#E7E1D9]/80 max-w-2xl mx-auto leading-relaxed">
+        Preparaciones a pedido para tus momentos inolvidables. Retirá por nuestro local en Costa del Este o te lo llevamos fresco a tu casa o cabaña.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3 Types of Orders -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+          Nuestras Propuestas
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F] mt-2">
+          ¿Qué tipo de encargo necesitas?
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {orderTypes.map((type) => (
+          <div class="bg-[#F4EFEB] rounded-3xl p-8 border border-[#87786F]/25 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#E9E3DD] text-[#A66B38] mb-4 border border-[#87786F]/20">
+                {type.anticipation}
+              </span>
+
+              <h3 class="font-display text-2xl font-bold text-[#3F2B1F] mb-3">
+                {type.title}
+              </h3>
+
+              <p class="text-sm text-[#5D4E44] leading-relaxed mb-6">
+                {type.description}
+              </p>
+            </div>
+
+            <div class="pt-6 border-t border-[#87786F]/20">
+              <a
+                href={buildOrderWhatsAppLink(type.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-[#25D366] hover:bg-[#20ba5a] text-white text-sm font-bold rounded-full shadow-sm hover:scale-102 active:scale-98 transition-all"
+              >
+                <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+                <span>Encargar por WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How Delivery & Pickup Works -->
+  <section class="py-20 bg-[#E7E1D9] border-y border-[#87786F]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-widest text-[#A66B38] font-bold">
+          Modalidades de Entrega
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#3F2B1F] mt-2">
+          Retiro en local o delivery directo
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+        
+        <!-- Local Pickup Card -->
+        <div class="bg-[#F4EFEB] rounded-3xl p-8 border border-[#87786F]/25 shadow-sm">
+          <div class="w-12 h-12 rounded-2xl bg-[#E9E3DD] flex items-center justify-center text-[#A66B38] mb-6">
+            <Store className="w-6 h-6" />
+          </div>
+          <h3 class="font-display text-2xl font-bold text-[#3F2B1F] mb-2">
+            Retiro por el Local (Take Away)
+          </h3>
+          <p class="text-sm text-[#5D4E44] leading-relaxed mb-4">
+            Coordinamos tu horario para que tu pedido esté recién horneado o empaquetado esperándote en nuestro mostrador.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-[#5D4E44]">
+            <li class="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#A66B38] shrink-0" />
+              <span>Sin costo adicional</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#A66B38] shrink-0" />
+              <span>Av. 2 y Los Alelíes, Costa del Este</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#A66B38] shrink-0" />
+              <span>Horario habitual de 8:00 a 20:30 hs</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Delivery Card -->
+        <div class="bg-[#F4EFEB] rounded-3xl p-8 border border-[#87786F]/25 shadow-sm">
+          <div class="w-12 h-12 rounded-2xl bg-[#E9E3DD] flex items-center justify-center text-[#A66B38] mb-6">
+            <Truck className="w-6 h-6" />
+          </div>
+          <h3 class="font-display text-2xl font-bold text-[#3F2B1F] mb-2">
+            Envíos a Domicilio (Delivery)
+          </h3>
+          <p class="text-sm text-[#5D4E44] leading-relaxed mb-4">
+            Repartos programados a casas particulares, cabañas y complejos en las 8 localidades principales del Partido de La Costa.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-[#5D4E44]">
+            <li class="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#A66B38] shrink-0" />
+              <span>Empaque reforzado térmico y protector</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#A66B38] shrink-0" />
+              <span>Franjas horarias de mañana y tarde</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#A66B38] shrink-0" />
+              <span>Costo accesible según localidad de destino</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Covered Zones -->
+      <div class="bg-[#F4EFEB] rounded-3xl p-8 border border-[#87786F]/20 max-w-5xl mx-auto">
+        <h4 class="font-display text-xl font-bold text-[#3F2B1F] mb-4 text-center">
+          Localidades cubiertas por nuestro servicio de delivery
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          {deliveryZones.map((zone) => (
+            <div class="p-3 bg-[#E9E3DD] rounded-xl border border-[#87786F]/20">
+              <p class="font-bold text-sm text-[#3F2B1F]">{zone.name}</p>
+              <p class="text-[11px] text-[#87786F] mt-0.5">{zone.badge}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment & Ordering Conditions -->
+  <section class="py-20 bg-[#E9E3DD]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[#F4EFEB] rounded-3xl p-8 sm:p-12 border border-[#87786F]/25 shadow-sm space-y-8">
+        <div class="flex items-center gap-3 border-b border-[#87786F]/20 pb-4">
+          <CreditCard className="w-6 h-6 text-[#A66B38]" />
+          <h3 class="font-display text-2xl font-bold text-[#3F2B1F]">
+            Condiciones y Medios de Pago
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#5D4E44]">
+          <div>
+            <h4 class="font-bold text-[#3F2B1F] mb-1">Medios de Pago Aceptados</h4>
+            <p class="leading-relaxed">
+              Efectivo en mostrador o al recibir el pedido, transferencias bancarias (alias CBU/CVU) y dinero en cuenta de Mercado Pago.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#3F2B1F] mb-1">Seña para Encargos Especiales</h4>
+            <p class="leading-relaxed">
+              Para tortas de gran tamaño, cajas corporativas o catering, solicitamos una seña previa del 50% para reservar la fecha de producción.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-[#87786F]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span class="text-xs text-[#87786F]">
+            ¿Tenés alguna duda o requerimiento especial?
+          </span>
+          <a
+            href={buildWhatsAppLink("¡Hola BenBru! Quería consultar por un encargo.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white hover:bg-[#20ba5a] text-sm font-bold rounded-full shadow-md transition-all"
+          >
+            <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+            <span>Consultar por WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
