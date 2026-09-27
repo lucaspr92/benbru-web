@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { site, buildWhatsAppLink, buildProductWhatsAppLink } from '../content/site';
 import { categories, products } from '../content/products';
 import { deliveryZones, orderSteps } from '../content/delivery';
-import { MessageCircle, MapPin, Clock, ArrowRight, Sparkles, Wheat, Coffee, Croissant, ShieldCheck } from 'lucide-react';
+import { MessageCircle, MapPin, Clock, ArrowRight, Sparkles, Wheat, Coffee, Croissant, ShieldCheck, ShoppingBag } from 'lucide-react';
 import { InstagramIcon } from '../components/ui/InstagramIcon';
 
 const featuredProducts = products.filter(p => p.featured).slice(0, 6);
@@ -122,7 +122,7 @@ const featuredProducts = products.filter(p => p.featured).slice(0, 6);
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {categories.map((cat) => (
           <a
             href={`/productos?cat=${cat.id}`}
@@ -134,6 +134,7 @@ const featuredProducts = products.filter(p => p.featured).slice(0, 6);
                 {cat.id === "pasteleria" && <Croissant className="w-6 h-6" />}
                 {cat.id === "salados" && <Sparkles className="w-6 h-6" />}
                 {cat.id === "cafeteria" && <Coffee className="w-6 h-6" />}
+                {cat.id === "almacen" && <ShoppingBag className="w-6 h-6" />}
               </span>
               <h3 class="font-display text-xl font-bold text-[#3F2B1F] group-hover:text-[#A66B38] transition-colors">
                 {cat.name}

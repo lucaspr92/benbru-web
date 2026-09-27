@@ -10,24 +10,60 @@ fs.mkdirSync(prodDir, { recursive: true });
 fs.mkdirSync(heroDir, { recursive: true });
 
 const items = [
-  { id: 'hogaza', name: 'Hogaza de Campo', category: 'Masa Madre', icon: '🍞' },
-  { id: 'pan-semillas', name: 'Hogaza Multisemillas', category: 'Masa Madre', icon: '🌾' },
-  { id: 'baguette', name: 'Baguette Tradición', category: 'Panadería', icon: '🥖' },
-  { id: 'brioche', name: 'Pan Brioche de Molde', category: 'Especialidad', icon: '🍞' },
-  { id: 'croissant', name: 'Croissant Clásico', category: 'Pastelería', icon: '🥐' },
-  { id: 'croissant-almendras', name: 'Croissant de Almendras', category: 'Pastelería', icon: '🥐' },
-  { id: 'pain-au-chocolat', name: 'Pain au Chocolat', category: 'Pastelería', icon: '🍫' },
-  { id: 'cinnamon-roll', name: 'Cinnamon Roll', category: 'Bollería', icon: '🌀' },
-  { id: 'tarta-frutos', name: 'Tarta Frutos Rojos', category: 'Pastelería', icon: '🫐' },
-  { id: 'focaccia', name: 'Focaccia al Romero', category: 'Salados', icon: '🌿' },
-  { id: 'croissant-relleno', name: 'Croissant Jamón & Brie', category: 'Salados', icon: '🥪' },
-  { id: 'sandwich-ciabatta', name: 'Ciabatta con Lomito', category: 'Salados', icon: '🥖' },
+  // Panadería
+  { id: 'facturas', name: 'Facturas Surtidas', category: 'Panadería', icon: '🥐' },
+  { id: 'libritos', name: 'Libritos de Grasa', category: 'Panadería', icon: '🍞' },
+  { id: 'bizcochitos', name: 'Bizcochitos de Grasa', category: 'Panadería', icon: '🥨' },
+  { id: 'cremona', name: 'Cremona Hojaldrada', category: 'Panadería', icon: '🥯' },
+  { id: 'chipa', name: 'Chipá Caliente', category: 'Panadería', icon: '🧀' },
+  { id: 'palmeritas', name: 'Palmeritas Dulces', category: 'Panadería', icon: '🥨' },
+  { id: 'rosquitas', name: 'Rosquitas Azucaradas', category: 'Panadería', icon: '🍩' },
+  { id: 'palitos-anis', name: 'Palitos de Anís', category: 'Panadería', icon: '🥖' },
+  { id: 'pan-tradicional', name: 'Pan de Mesa / Flauta', category: 'Panadería', icon: '🥖' },
+  { id: 'pan-casero', name: 'Pan Casero de Campo', category: 'Panadería', icon: '🍞' },
+  { id: 'negritos', name: 'Negritos de Salvado', category: 'Panadería', icon: '🍞' },
+  { id: 'figazas', name: 'Figazas de Manteca', category: 'Panadería', icon: '🥪' },
+
+  // Pastelería
+  { id: 'invertida-manzana', name: 'Invertida de Manzana', category: 'Pastelería', icon: '🍎' },
+  { id: 'tarta-ricota', name: 'Tarta de Ricota', category: 'Pastelería', icon: '🥧' },
+  { id: 'ricota-dulce-leche', name: 'Ricota & Dulce de Leche', category: 'Pastelería', icon: '🥧' },
+  { id: 'tarta-coco', name: 'Tarta Coco & DDL', category: 'Pastelería', icon: '🥥' },
+  { id: 'pastafrola', name: 'Pasta Frola Artesanal', category: 'Pastelería', icon: '🥧' },
+  { id: 'postre-balcarce', name: 'Postre Balcarce', category: 'Pastelería', icon: '🍰' },
+  { id: 'selva-negra', name: 'Torta Selva Negra', category: 'Pastelería', icon: '🎂' },
+  { id: 'brownie-nuez', name: 'Brownie con Nuez', category: 'Pastelería', icon: '🍫' },
+  { id: 'bombon-suizo', name: 'Torta Bombón Suizo', category: 'Pastelería', icon: '🍫' },
+  { id: 'chaja', name: 'Postre Chajá', category: 'Pastelería', icon: '🍑' },
+
+  // Salados
+  { id: 'sandwiches-miga', name: 'Sándwiches de Miga', category: 'Salados', icon: '🥪' },
+  { id: 'prepizzas-muzzarella', name: 'Pre-pizza Muzzarella', category: 'Salados', icon: '🍕' },
+  { id: 'prepizzas-fugazzeta', name: 'Pre-pizza Fugazzeta', category: 'Salados', icon: '🍕' },
+  { id: 'empanadas', name: 'Empanadas Caseras', category: 'Salados', icon: '🥟' },
+
+  // Cafetería
   { id: 'flat-white', name: 'Flat White de Especialidad', category: 'Cafetería', icon: '☕' },
   { id: 'cappuccino', name: 'Cappuccino Italiano', category: 'Cafetería', icon: '☕' },
-  { id: 'iced-latte', name: 'Iced Latte Vainilla', category: 'Cafetería', icon: '🧊' }
+  { id: 'iced-latte', name: 'Iced Latte Vainilla', category: 'Cafetería', icon: '🧊' },
+
+  // Almacén & Bebidas & Fuego
+  { id: 'bebidas-aguas', name: 'Aguas & Gaseosas', category: 'Almacén', icon: '🥤' },
+  { id: 'gatorade', name: 'Gatorade Isotónica', category: 'Almacén', icon: '⚡' },
+  { id: 'cervezas', name: 'Cervezas Frías', category: 'Almacén', icon: '🍺' },
+  { id: 'yerba-mate', name: 'Yerba Mate Variedad', category: 'Almacén', icon: '🧉' },
+  { id: 'galletitas-condor', name: 'Galletitas Cóndor', category: 'Almacén', icon: '🍪' },
+  { id: 'lacteos', name: 'Lácteos Frescos', category: 'Almacén', icon: '🥛' },
+  { id: 'agua-bidon', name: 'Agua en Bidón', category: 'Almacén', icon: '💧' },
+  { id: 'hielo', name: 'Bolsa de Hielo', category: 'Almacén', icon: '🧊' },
+  { id: 'carbon', name: 'Carbón Vegetal Asado', category: 'Almacén', icon: '🥩' },
+  { id: 'lena', name: 'Leña Seca para Hogar', category: 'Almacén', icon: '🔥' }
 ];
 
 async function generateProductWebp(item) {
+  const safeName = item.name.replace(/&/g, '&amp;');
+  const safeCategory = item.category.replace(/&/g, '&amp;');
+
   const svg = `
   <svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -50,15 +86,15 @@ async function generateProductWebp(item) {
     
     <!-- Badge -->
     <g transform="translate(400, 140)">
-      <rect x="-90" y="-18" width="180" height="36" rx="18" fill="#E9E3DD" stroke="#87786F" stroke-opacity="0.4" />
-      <text text-anchor="middle" y="6" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#5D4E44" letter-spacing="2">${item.category.toUpperCase()}</text>
+      <rect x="-100" y="-18" width="200" height="36" rx="18" fill="#E9E3DD" stroke="#87786F" stroke-opacity="0.4" />
+      <text text-anchor="middle" y="6" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#5D4E44" letter-spacing="2">${safeCategory.toUpperCase()}</text>
     </g>
 
     <!-- Icon -->
     <text x="400" y="290" text-anchor="middle" font-size="96">${item.icon}</text>
     
     <!-- Title -->
-    <text x="400" y="380" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="bold" fill="#3F2B1F">${item.name.replace(/&/g, '&amp;')}</text>
+    <text x="400" y="380" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="bold" fill="#3F2B1F">${safeName}</text>
     
     <!-- Brand mark -->
     <text x="400" y="420" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="500" fill="#87786F">BENBRU • PANADERÍA &amp; CAFETERÍA</text>
@@ -78,50 +114,11 @@ async function generateProductWebp(item) {
   console.log(`Generated ${dest}`);
 }
 
-async function generateHeroWebp() {
-  const heroSvg = `
-  <svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="heroBg" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3F2B1F" />
-        <stop offset="60%" stop-color="#2D1F16" />
-        <stop offset="100%" stop-color="#1E140E" />
-      </linearGradient>
-      <radialGradient id="warmLight" cx="50%" cy="40%" r="50%">
-        <stop offset="0%" stop-color="#C88242" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-
-    <rect width="1920" height="1080" fill="url(#heroBg)" />
-    <rect width="1920" height="1080" fill="url(#warmLight)" />
-
-    <!-- Ambient circles -->
-    <circle cx="960" cy="480" r="320" fill="none" stroke="#E9E3DD" stroke-opacity="0.08" stroke-width="2" />
-    <circle cx="960" cy="480" r="380" fill="none" stroke="#A66B38" stroke-opacity="0.1" stroke-width="1" stroke-dasharray="8 8" />
-
-    <g transform="translate(960, 480)">
-      <text text-anchor="middle" y="-60" font-size="120">🌾</text>
-      <text text-anchor="middle" y="50" font-family="'Playfair Display', Georgia, serif" font-size="56" font-weight="bold" fill="#E9E3DD" letter-spacing="4">BENBRU</text>
-      <text text-anchor="middle" y="100" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="600" fill="#C88242" letter-spacing="8">PANADERÍA &amp; CAFETERÍA</text>
-      <text text-anchor="middle" y="140" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" fill="#E7E1D9" opacity="0.8">COSTA DEL ESTE • PARTIDO DE LA COSTA</text>
-    </g>
-  </svg>
-  `;
-
-  const heroDest = path.join(heroDir, 'hero-bakery.webp');
-  await sharp(Buffer.from(heroSvg))
-    .webp({ quality: 90 })
-    .toFile(heroDest);
-  console.log(`Generated ${heroDest}`);
-}
-
 async function main() {
   for (const item of items) {
     await generateProductWebp(item);
   }
-  await generateHeroWebp();
-  console.log('All image assets generated successfully.');
+  console.log('All product image assets generated successfully.');
 }
 
 main().catch(console.error);

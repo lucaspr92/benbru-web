@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MessageCircle, X, Sparkles, Coffee, Croissant, Wheat, Sandwich } from "lucide-react";
+import { MessageCircle, X, Sparkles, Coffee, Croissant, Wheat, Sandwich, ShoppingBag } from "lucide-react";
 import type { Product, Category, CategoryId } from "../../content/products";
 import { buildProductWhatsAppLink } from "../../content/site";
 
@@ -56,6 +56,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
         return <Sandwich className="w-4 h-4" />;
       case "cafeteria":
         return <Coffee className="w-4 h-4" />;
+      case "almacen":
+        return <ShoppingBag className="w-4 h-4" />;
       default:
         return <Sparkles className="w-4 h-4" />;
     }
